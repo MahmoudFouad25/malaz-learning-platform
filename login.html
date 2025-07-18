@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملاذ الحيارى - منصة التعلم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .main-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-msg {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+        }
+
+        /* نماذج تسجيل الدخول */
+        .auth-container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .auth-title {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f0f8ff;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #f0f8ff;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .switch-auth {
+            text-align: center;
+            color: #87ceeb;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .switch-auth:hover {
+            color: #fff;
+        }
+
+        /* قسم الدورات */
+        .section-title {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #f0f8ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .course-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .course-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #f0f8ff;
+        }
+
+        .course-price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .course-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .course-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .course-btn.purchased {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+
+        .course-btn.purchased:hover {
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .alert.success {
+            background: rgba(37, 211, 102, 0.3);
+            border: 1px solid #25d366;
+            color: #fff;
+        }
+
+        .alert.error {
+            background: rgba(255, 107, 107, 0.3);
+            border: 1px solid #ff6b6b;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2em;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الرأس -->
+        <div class="header">
+            <h1 class="main-title">منصة ملاذ الحيارى التعليمية</h1>
+            <p>رحلتك للتعلم والنمو الشخصي</p>
+        </div>
+
+        <!-- قسم تسجيل الدخول -->
+        <div id="authSection" class="auth-container">
+            <!-- نموذج تسجيل الدخول -->
+            <div id="loginForm">
+                <h2 class="auth-title">تسجيل الدخول</h2>
+                <div id="loginAlert"></div>
+                
+                <div class="form-group">
+                    <label for="loginEmail">البريد الإلكتروني:</label>
+                    <input type="email" id="loginEmail" placeholder="أدخل بريدك الإلكتروني" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">كلمة المرور:</label>
+                    <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
+                </div>
+                
+                <button class="auth-btn" onclick="login()">دخول</button>
+                
+                <p class="switch-auth" onclick="showRegister()">ليس لديك حساب؟ إنشاء حساب جديد</p>
+            </div>
+
+            <!-- نموذج إنشاء حساب -->
+            <div id="registerForm" class="hidden">
+                <h2 class="auth-title">إنشاء حساب جديد</h2>
+                <div id="registerAlert"></div>
+                
+                <div class="form-group">
+                    <label for="registerName">الاسم الكامل:</label>
+                    <input type="text" id="registerName" placeholder="أدخل اسمك الكامل" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerEmail">البريد الإلكتروني:</label>
+                    <input type="email" id="registerEmail" placeholder="أدخل بريدك الإلكتروني" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">كلمة المرور:</label>
+                    <input type="password" id="registerPassword" placeholder="أدخل كلمة المرور" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور:</label>
+                    <input type="password" id="confirmPassword" placeholder="أعد إدخال كلمة المرور" required>
+                </div>
+                
+                <button class="auth-btn" onclick="register()">إنشاء حساب</button>
+                
+                <p class="switch-auth" onclick="showLogin()">لديك حساب بالفعل؟ تسجيل الدخول</p>
+            </div>
+        </div>
+
+        <!-- القسم الرئيسي للمستخدمين المسجلين -->
+        <div id="mainContent" class="hidden">
+            <!-- معلومات المستخدم -->
+            <div class="user-info">
+                <div class="welcome-msg">
+                    أهلاً بك، <span id="userName"></span>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+
+            <!-- الدورات المشتراة -->
+            <div id="purchasedCourses">
+                <h2 class="section-title">🎓 دوراتي</h2>
+                <div id="myCoursesList" class="courses-grid">
+                    <!-- ستظهر هنا الدورات المشتراة -->
+                </div>
+            </div>
+
+            <!-- الدورات المتاحة -->
+            <div id="availableCourses">
+                <h2 class="section-title">📚 الدورات المتاحة</h2>
+                <div id="availableCoursesList" class="courses-grid">
+                    <!-- ستظهر هنا الدورات المتاحة للشراء -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الدورات
+        const courses = [
+            {
+                id: 1,
+                title: "ملاذ الحيارى - الموسم الأول",
+                description: "خريطة البحث عن المأوى للقلوب التائهة - رحلة من 7 لقاءات لاكتشاف الذات",
+                price: "مجاني",
+                videos: [
+                    { title: "المقدمة والسؤال الأول", url: "https://youtu.be/GlIrvAazC2I", watched: false },
+                    { title: "السؤال الثاني", url: "https://youtu.be/NlZ6k0zsOcA", watched: false },
+                    { title: "السؤال الثالث", url: "https://youtu.be/kBe6_x_xAog", watched: false },
+                    { title: "السؤال الرابع", url: "https://youtu.be/8X1BYxgcyFc", watched: false },
+                    { title: "الخاتمة والمهمة", url: "https://youtu.be/eEY9Ag8JsgA", watched: false }
+                ]
+            },
+            {
+                id: 2,
+                title: "رحلة التواصل الفعال",
+                description: "كورس شامل لتعلم مهارات التواصل والتأثير الإيجابي في الآخرين",
+                price: "299 جنيه",
+                videos: [
+                    { title: "مقدمة في التواصل", url: "#", watched: false },
+                    { title: "لغة الجسد", url: "#", watched: false },
+                    { title: "الاستماع الفعال", url: "#", watched: false }
+                ]
+            },
+            {
+                id: 3,
+                title: "إدارة الوقت والإنتاجية",
+                description: "تعلم كيفية إدارة وقتك بفعالية وزيادة إنتاجيتك الشخصية والمهنية",
+                price: "199 جنيه",
+                videos: [
+                    { title: "أساسيات إدارة الوقت", url: "#", watched: false },
+                    { title: "تقنيات التخطيط", url: "#", watched: false },
+                    { title: "التخلص من المشتتات", url: "#", watched: false }
+                ]
+            }
+        ];
+
+        // المتغيرات العامة
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let userCourses = JSON.parse(localStorage.getItem('userCourses')) || {};
+
+        // تحقق من تسجيل الدخول عند تحميل الصفحة
+        window.onload = function() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMainContent();
+            }
+        };
+
+        // إظهار نموذج التسجيل
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        // إظهار نموذج تسجيل الدخول
+        function showLogin() {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        // تسجيل حساب جديد
+        function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            const alertDiv = document.getElementById('registerAlert');
+
+            // التحقق من البيانات
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert(alertDiv, 'جميع الحقول مطلوبة', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert(alertDiv, 'كلمة المرور وتأكيد كلمة المرور غير متطابقتين', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert(alertDiv, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                return;
+            }
+
+            // التحقق من وجود البريد الإلكتروني
+            if (users.find(user => user.email === email)) {
+                showAlert(alertDiv, 'البريد الإلكتروني مسجل بالفعل', 'error');
+                return;
+            }
+
+            // إنشاء المستخدم الجديد
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password,
+                joinDate: new Date().toLocaleDateString('ar-EG')
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // منح الدورة المجانية الأولى
+            if (!userCourses[newUser.id]) {
+                userCourses[newUser.id] = [1]; // إعطاء الدورة الأولى مجاناً
+                localStorage.setItem('userCourses', JSON.stringify(userCourses));
+            }
+
+            showAlert(alertDiv, 'تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن', 'success');
+            
+            setTimeout(() => {
+                showLogin();
+                document.getElementById('loginEmail').value = email;
+            }, 2000);
+        }
+
+        // تسجيل الدخول
+        function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const alertDiv = document.getElementById('loginAlert');
+
+            if (!email || !password) {
+                showAlert(alertDiv, 'جميع الحقول مطلوبة', 'error');
+                return;
+            }
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                showAlert(alertDiv, 'البريد الإلكتروني أو كلمة المرور غير صحيحة', 'error');
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            showMainContent();
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('mainContent').classList.add('hidden');
+            
+            // مسح النماذج
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginAlert').innerHTML = '';
+        }
+
+        // إظهار المحتوى الرئيسي
+        function showMainContent() {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.getElementById('userName').textContent = currentUser.name;
+            
+            loadUserCourses();
+            loadAvailableCourses();
+        }
+
+        // تحميل دورات المستخدم
+        function loadUserCourses() {
+            const userCourseIds = userCourses[currentUser.id] || [];
+            const myCourses = courses.filter(course => userCourseIds.includes(course.id));
+            
+            const container = document.getElementById('myCoursesList');
+            container.innerHTML = '';
+
+            if (myCourses.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #87ceeb; font-size: 1.2em;">لم تشتري أي دورة بعد</p>';
+                return;
+            }
+
+            myCourses.forEach(course => {
+                const progress = calculateProgress(course.id);
+                const courseCard = `
+                    <div class="course-card">
+                        <h3 class="course-title">${course.title}</h3>
+                        <p class="course-description">${course.description}</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                        <p style="margin: 10px 0; color: #87ceeb;">التقدم: ${progress}%</p>
+                        <button class="course-btn purchased" onclick="viewCourse(${course.id})">
+                            مشاهدة الدورة
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += courseCard;
+            });
+        }
+
+        // تحميل الدورات المتاحة
+        function loadAvailableCourses() {
+            const userCourseIds = userCourses[currentUser.id] || [];
+            const availableCourses = courses.filter(course => !userCourseIds.includes(course.id));
+            
+            const container = document.getElementById('availableCoursesList');
+            container.innerHTML = '';
+
+            availableCourses.forEach(course => {
+                const courseCard = `
+                    <div class="course-card">
+                        <h3 class="course-title">${course.title}</h3>
+                        <p class="course-description">${course.description}</p>
+                        <p class="course-price">${course.price}</p>
+                        <button class="course-btn" onclick="purchaseCourse(${course.id})">
+                            ${course.price === 'مجاني' ? 'احصل عليها مجاناً' : 'اشتري الآن'}
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += courseCard;
+            });
+        }
+
+        // شراء دورة
+        function purchaseCourse(courseId) {
+            if (!userCourses[currentUser.id]) {
+                userCourses[currentUser.id] = [];
+            }
+            
+            userCourses[currentUser.id].push(courseId);
+            localStorage.setItem('userCourses', JSON.stringify(userCourses));
+            
+            alert('تم شراء الدورة بنجاح! ستجدها في قسم "دوراتي"');
+            loadUserCourses();
+            loadAvailableCourses();
+        }
+
+        // مشاهدة دورة
+        function viewCourse(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (course) {
+                // هنا يمكن إضافة صفحة منفصلة لمشاهدة الدورة
+                if (courseId === 1) {
+                    window.open('index.html', '_blank');
+                } else {
+                    alert('هذه الدورة قيد التطوير وستكون متاحة قريباً!');
+                }
+            }
+        }
+
+        // حساب تقدم الدورة
+        function calculateProgress(courseId) {
+            // هنا يمكن إضافة منطق حقيقي لحساب التقدم
+            // للتبسيط، سنعيد قيمة عشوائية
+            return Math.floor(Math.random() * 100);
+        }
+
+        // إظهار التنبيه
+        function showAlert(container, message, type) {
+            container.innerHTML = `<div class="alert ${type}">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
