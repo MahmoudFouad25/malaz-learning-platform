@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الفؤاد التعليمية - رحلة إلى مكارم الأخلاق</title>
+    <title>منصة الفؤاد التعليمية - استيقظ، اكتشف، انطلق</title>
     <style>
         * {
             margin: 0;
@@ -135,14 +135,27 @@
             z-index: 2;
         }
 
-        .mission {
-            font-size: 1.3em;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-            color: #c5cae9;
-            position: relative;
-            z-index: 2;
+        /* Loading Spinner */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #ffd700;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #ffd700;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* معلومات المستخدم */
@@ -164,7 +177,13 @@
             color: #ffd700;
         }
 
-        .logout-btn {
+        .user-role {
+            font-size: 0.9em;
+            color: #9fa8da;
+            margin-top: 5px;
+        }
+
+        .logout-btn, .admin-btn {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
             padding: 12px 25px;
@@ -174,11 +193,22 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
+            margin: 0 5px;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .logout-btn:hover {
+        .admin-btn {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+        }
+
+        .logout-btn:hover, .admin-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+        }
+
+        .admin-btn:hover {
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.6);
         }
 
         /* المسالك التسعة */
@@ -328,10 +358,8 @@
             border-color: #ffd700;
         }
 
-        .auth-btn {
+        .auth-btn, .google-btn {
             width: 100%;
-            background: linear-gradient(45deg, #ffd700, #ffb347);
-            color: #1a237e;
             padding: 18px;
             border: none;
             border-radius: 15px;
@@ -339,13 +367,31 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
+        }
+
+        .auth-btn {
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #1a237e;
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
         }
 
-        .auth-btn:hover {
+        .google-btn {
+            background: linear-gradient(45deg, #db4437, #c23321);
+            color: white;
+            box-shadow: 0 6px 20px rgba(219, 68, 55, 0.3);
+        }
+
+        .auth-btn:hover, .google-btn:hover {
             transform: translateY(-3px);
+        }
+
+        .auth-btn:hover {
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .google-btn:hover {
+            box-shadow: 0 10px 30px rgba(219, 68, 55, 0.5);
         }
 
         .switch-auth {
@@ -498,6 +544,82 @@
             transition: width 0.5s ease;
         }
 
+        /* لوحة تحكم المدير */
+        .admin-panel {
+            background: rgba(156, 39, 176, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(156, 39, 176, 0.3);
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            color: #c5cae9;
+            margin-top: 5px;
+        }
+
+        .users-table {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .table-header {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            font-weight: bold;
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 2fr;
+            gap: 15px;
+        }
+
+        .table-row {
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 2fr;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            align-items: center;
+        }
+
+        .manage-btn {
+            background: linear-gradient(45deg, #2196f3, #1976d2);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .manage-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
         @media (max-width: 768px) {
             .main-title {
                 font-size: 2.5em;
@@ -524,13 +646,28 @@
             .header, .auth-container, .paths-section, .courses-section {
                 padding: 30px 20px;
             }
+
+            .table-header, .table-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Loading State -->
+        <div id="loadingState" class="loading">
+            <div class="spinner"></div>
+            <p>جارٍ تحميل المنصة...</p>
+        </div>
+
         <!-- الرأس والشعار -->
-        <div class="header">
+        <div id="headerSection" class="header hidden">
             <div class="logo-container">
                 <div class="logo">ف</div>
             </div>
@@ -539,7 +676,7 @@
         </div>
 
         <!-- قسم تسجيل الدخول -->
-        <div id="authSection" class="auth-container">
+        <div id="authSection" class="auth-container hidden">
             <!-- نموذج تسجيل الدخول -->
             <div id="loginForm">
                 <h2 class="auth-title">ادخل إلى عالمك</h2>
@@ -555,7 +692,8 @@
                     <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
                 </div>
                 
-                <button class="auth-btn" onclick="login()">دخول المنصة</button>
+                <button class="auth-btn" onclick="loginWithEmail()">دخول المنصة</button>
+                <button class="google-btn" onclick="loginWithGoogle()">🔍 دخول بحساب Google</button>
                 
                 <p class="switch-auth" onclick="showRegister()">ليس لديك حساب؟ ابدأ رحلتك معنا</p>
             </div>
@@ -585,7 +723,8 @@
                     <input type="password" id="confirmPassword" placeholder="أعد إدخال كلمة المرور" required>
                 </div>
                 
-                <button class="auth-btn" onclick="register()">انضم للرحلة</button>
+                <button class="auth-btn" onclick="registerWithEmail()">انضم للرحلة</button>
+                <button class="google-btn" onclick="loginWithGoogle()">🔍 إنشاء حساب بـ Google</button>
                 
                 <p class="switch-auth" onclick="showLogin()">لديك حساب؟ ادخل من هنا</p>
             </div>
@@ -595,10 +734,48 @@
         <div id="mainContent" class="hidden">
             <!-- معلومات المستخدم -->
             <div class="user-info">
-                <div class="welcome-msg">
-                    أهلاً وسهلاً، <span id="userName"></span> - رفيق الرحلة
+                <div>
+                    <div class="welcome-msg">
+                        أهلاً وسهلاً، <span id="userName"></span>
+                    </div>
+                    <div class="user-role" id="userRole">رفيق الرحلة</div>
                 </div>
-                <button class="logout-btn" onclick="logout()">إنهاء الجلسة</button>
+                <div>
+                    <button id="adminPanelBtn" class="admin-btn hidden" onclick="toggleAdminPanel()">لوحة التحكم</button>
+                    <button class="logout-btn" onclick="logout()">إنهاء الجلسة</button>
+                </div>
+            </div>
+
+            <!-- لوحة تحكم المدير -->
+            <div id="adminPanel" class="admin-panel hidden">
+                <h2 class="section-title">🔧 لوحة تحكم المدير</h2>
+                
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">إجمالي المستخدمين</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeUsers">0</div>
+                        <div class="stat-label">المستخدمين النشطين</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalEnrollments">0</div>
+                        <div class="stat-label">إجمالي الاشتراكات</div>
+                    </div>
+                </div>
+
+                <div class="users-table">
+                    <div class="table-header">
+                        <div>الاسم</div>
+                        <div>البريد الإلكتروني</div>
+                        <div>الدورات</div>
+                        <div>الإجراءات</div>
+                    </div>
+                    <div id="usersTableBody">
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </div>
+                </div>
             </div>
 
             <!-- المسالك التسعة -->
@@ -688,8 +865,35 @@
         </div>
     </div>
 
-    <script>
-        // بيانات الدورات المحدثة
+    <!-- Firebase Scripts -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, query, where, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAcPzPzIDYHvezf5klAwFzU0gmoo_AsCo",
+            authDomain: "fouad-academy.firebaseapp.com",
+            projectId: "fouad-academy",
+            storageBucket: "fouad-academy.firebasestorage.app",
+            messagingSenderId: "553738647199",
+            appId: "1:553738647199:web:4e73c59b115da5be15d4aa",
+            measurementId: "G-M0VML1SRZ4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Global variables
+        let currentUser = null;
+        let isAdminPanelVisible = false;
+
+        // Course data
         const courses = [
             {
                 id: 1,
@@ -743,36 +947,62 @@
             }
         ];
 
-        // المتغيرات العامة
-        let currentUser = null;
-        let users = JSON.parse(localStorage.getItem('fouad_users')) || [];
-        let userCourses = JSON.parse(localStorage.getItem('fouad_userCourses')) || {};
+        // Admin emails
+        const ADMIN_EMAILS = [
+            "coach.mahmoud.fouad@gmail.com",
+            "enneagram.compass@gmail.com",
+            "mahmoudfouad25@gmail.com"
+        ];
 
-        // تحقق من تسجيل الدخول عند تحميل الصفحة
-        window.onload = function() {
-            const savedUser = localStorage.getItem('fouad_currentUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                showMainContent();
+        // Initialize the app
+        window.addEventListener('load', () => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    showMainContent();
+                } else {
+                    showAuthSection();
+                }
+                hideLoading();
+            });
+        });
+
+        // Auth functions
+        window.loginWithEmail = async () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const alertDiv = document.getElementById('loginAlert');
+
+            if (!email || !password) {
+                showAlert(alertDiv, 'البريد الإلكتروني وكلمة المرور مطلوبان', 'error');
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                showAlert(alertDiv, getFirebaseErrorMessage(error), 'error');
             }
         };
 
-        function showRegister() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registerForm').classList.remove('hidden');
-        }
+        window.loginWithGoogle = async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+                
+                // Create user document if it doesn't exist
+                await createUserDocument(user);
+            } catch (error) {
+                const alertDiv = document.getElementById('loginAlert') || document.getElementById('registerAlert');
+                showAlert(alertDiv, getFirebaseErrorMessage(error), 'error');
+            }
+        };
 
-        function showLogin() {
-            document.getElementById('registerForm').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-        }
-
-        function register() {
+        window.registerWithEmail = async () => {
             const name = document.getElementById('registerName').value.trim();
             const email = document.getElementById('registerEmail').value.trim();
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-
             const alertDiv = document.getElementById('registerAlert');
 
             if (!name || !email || !password || !confirmPassword) {
@@ -790,94 +1020,127 @@
                 return;
             }
 
-            if (users.find(user => user.email === email)) {
-                showAlert(alertDiv, 'هذا البريد مسجل بالفعل في منصتنا', 'error');
-                return;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Update user profile
+                await updateProfile(user, { displayName: name });
+                
+                // Create user document
+                await createUserDocument(user, name);
+                
+                showAlert(alertDiv, 'مرحباً بك في عائلة الفؤاد! تم منحك دورة "ملاذ الحيارى" مجاناً', 'success');
+            } catch (error) {
+                showAlert(alertDiv, getFirebaseErrorMessage(error), 'error');
             }
+        };
 
-            const newUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                password: password,
-                joinDate: new Date().toLocaleDateString('ar-EG'),
-                primaryPath: null // سيتم تحديده لاحقاً
-            };
-
-            users.push(newUser);
-            localStorage.setItem('fouad_users', JSON.stringify(users));
-
-            // منح الدورة المجانية الأولى
-            if (!userCourses[newUser.id]) {
-                userCourses[newUser.id] = [1];
-                localStorage.setItem('fouad_userCourses', JSON.stringify(userCourses));
+        window.logout = async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
             }
+        };
 
-            showAlert(alertDiv, 'مرحباً بك في عائلة الفؤاد! تم منحك دورة "ملاذ الحيارى" مجاناً', 'success');
+        // User document functions
+        async function createUserDocument(user, customName = null) {
+            const userRef = doc(db, 'users', user.uid);
+            const userDoc = await getDoc(userRef);
             
-            setTimeout(() => {
-                showLogin();
-                document.getElementById('loginEmail').value = email;
-            }, 3000);
+            if (!userDoc.exists()) {
+                const userData = {
+                    uid: user.uid,
+                    name: customName || user.displayName || 'مستخدم جديد',
+                    email: user.email,
+                    joinDate: new Date().toISOString(),
+                    enrolledCourses: [1], // Give first course for free
+                    isAdmin: ADMIN_EMAILS.includes(user.email),
+                    lastActive: new Date().toISOString()
+                };
+                
+                await setDoc(userRef, userData);
+                
+                // Create enrollment record for free course
+                await setDoc(doc(db, 'enrollments', `${user.uid}_1`), {
+                    userId: user.uid,
+                    courseId: 1,
+                    enrolledAt: new Date().toISOString(),
+                    progress: 0,
+                    completed: false
+                });
+            } else {
+                // Update last active
+                await updateDoc(userRef, {
+                    lastActive: new Date().toISOString()
+                });
+            }
         }
 
-        function login() {
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const alertDiv = document.getElementById('loginAlert');
-
-            if (!email || !password) {
-                showAlert(alertDiv, 'البريد الإلكتروني وكلمة المرور مطلوبان', 'error');
-                return;
-            }
-
-            const user = users.find(u => u.email === email && u.password === password);
-
-            if (!user) {
-                showAlert(alertDiv, 'بيانات تسجيل الدخول غير صحيحة', 'error');
-                return;
-            }
-
-            currentUser = user;
-            localStorage.setItem('fouad_currentUser', JSON.stringify(user));
-            showMainContent();
+        // UI functions
+        function hideLoading() {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('headerSection').classList.remove('hidden');
         }
 
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('fouad_currentUser');
+        function showAuthSection() {
             document.getElementById('authSection').classList.remove('hidden');
             document.getElementById('mainContent').classList.add('hidden');
-            
-            // مسح النماذج
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('loginAlert').innerHTML = '';
         }
 
-        function showMainContent() {
+        async function showMainContent() {
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('userName').textContent = currentUser.name;
+            
+            // Get user data
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userDoc = await getDoc(userRef);
+            const userData = userDoc.data();
+            
+            // Update UI
+            document.getElementById('userName').textContent = userData?.name || currentUser.displayName || 'رفيق الرحلة';
+            
+            // Show admin panel if user is admin
+            if (userData?.isAdmin) {
+                document.getElementById('adminPanelBtn').classList.remove('hidden');
+                document.getElementById('userRole').textContent = 'مدير المنصة';
+            }
             
             loadUserCourses();
             loadAvailableCourses();
         }
 
-        function loadUserCourses() {
-            const userCourseIds = userCourses[currentUser.id] || [];
-            const myCourses = courses.filter(course => userCourseIds.includes(course.id));
+        window.showRegister = () => {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        };
+
+        window.showLogin = () => {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        };
+
+        // Course functions
+        async function loadUserCourses() {
+            if (!currentUser) return;
             
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userDoc = await getDoc(userRef);
+            const userData = userDoc.data();
+            const enrolledCourseIds = userData?.enrolledCourses || [];
+            
+            const enrolledCourses = courses.filter(course => enrolledCourseIds.includes(course.id));
             const container = document.getElementById('myCoursesList');
             container.innerHTML = '';
 
-            if (myCourses.length === 0) {
+            if (enrolledCourses.length === 0) {
                 container.innerHTML = '<p style="text-align: center; color: #9fa8da; font-size: 1.3em; grid-column: 1/-1;">لم تبدأ أي رحلة تعليمية بعد</p>';
                 return;
             }
 
-            myCourses.forEach(course => {
-                const progress = calculateProgress(course.id);
+            for (const course of enrolledCourses) {
+                const progress = await getCourseProgress(course.id);
                 const courseCard = `
                     <div class="course-card">
                         <h3 class="course-title">${course.title}</h3>
@@ -893,13 +1156,18 @@
                     </div>
                 `;
                 container.innerHTML += courseCard;
-            });
+            }
         }
 
-        function loadAvailableCourses() {
-            const userCourseIds = userCourses[currentUser.id] || [];
-            const availableCourses = courses.filter(course => !userCourseIds.includes(course.id));
+        async function loadAvailableCourses() {
+            if (!currentUser) return;
             
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userDoc = await getDoc(userRef);
+            const userData = userDoc.data();
+            const enrolledCourseIds = userData?.enrolledCourses || [];
+            
+            const availableCourses = courses.filter(course => !enrolledCourseIds.includes(course.id));
             const container = document.getElementById('availableCoursesList');
             container.innerHTML = '';
 
@@ -924,44 +1192,199 @@
             });
         }
 
-        function purchaseCourse(courseId) {
-            const course = courses.find(c => c.id === courseId);
+        window.purchaseCourse = async (courseId) => {
+            if (!currentUser) return;
             
-            if (!userCourses[currentUser.id]) {
-                userCourses[currentUser.id] = [];
+            try {
+                const course = courses.find(c => c.id === courseId);
+                const userRef = doc(db, 'users', currentUser.uid);
+                const userDoc = await getDoc(userRef);
+                const userData = userDoc.data();
+                
+                const updatedCourses = [...(userData.enrolledCourses || []), courseId];
+                
+                await updateDoc(userRef, {
+                    enrolledCourses: updatedCourses
+                });
+                
+                // Create enrollment record
+                await setDoc(doc(db, 'enrollments', `${currentUser.uid}_${courseId}`), {
+                    userId: currentUser.uid,
+                    courseId: courseId,
+                    enrolledAt: new Date().toISOString(),
+                    progress: 0,
+                    completed: false
+                });
+                
+                alert(`مبارك! انضممت لرحلة "${course.title}" بنجاح! ستجدها في قسم "مسيرتي التعليمية"`);
+                loadUserCourses();
+                loadAvailableCourses();
+            } catch (error) {
+                console.error('Purchase error:', error);
+                alert('حدث خطأ أثناء الاشتراك في الدورة');
             }
-            
-            userCourses[currentUser.id].push(courseId);
-            localStorage.setItem('fouad_userCourses', JSON.stringify(userCourses));
-            
-            alert(`مبارك! انضممت لرحلة "${course.title}" بنجاح! ستجدها في قسم "مسيرتي التعليمية"`);
-            loadUserCourses();
-            loadAvailableCourses();
-        }
+        };
 
-        function viewCourse(courseId) {
+        window.viewCourse = (courseId) => {
             const course = courses.find(c => c.id === courseId);
             if (course) {
                 if (courseId === 1) {
-                    // فتح دورة ملاذ الحيارى
                     window.open('../malaz-alhayara-course/', '_blank');
                 } else {
                     alert(`رحلة "${course.title}" قيد التطوير وستكون متاحة قريباً إن شاء الله!`);
                 }
             }
+        };
+
+        async function getCourseProgress(courseId) {
+            // Simplified progress calculation
+            return Math.floor(Math.random() * 100);
         }
 
-        function calculateProgress(courseId) {
-            // منطق حساب التقدم (مبسط للعرض)
-            const progress = Math.floor(Math.random() * 100);
-            return progress;
+        // Admin functions
+        window.toggleAdminPanel = async () => {
+            const panel = document.getElementById('adminPanel');
+            
+            if (isAdminPanelVisible) {
+                panel.classList.add('hidden');
+                isAdminPanelVisible = false;
+            } else {
+                panel.classList.remove('hidden');
+                isAdminPanelVisible = true;
+                await loadAdminData();
+            }
+        };
+
+        async function loadAdminData() {
+            try {
+                // Get all users
+                const usersRef = collection(db, 'users');
+                const usersSnapshot = await getDocs(usersRef);
+                const users = [];
+                
+                usersSnapshot.forEach((doc) => {
+                    users.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Get all enrollments
+                const enrollmentsRef = collection(db, 'enrollments');
+                const enrollmentsSnapshot = await getDocs(enrollmentsRef);
+                
+                // Update stats
+                document.getElementById('totalUsers').textContent = users.length;
+                document.getElementById('activeUsers').textContent = users.filter(u => 
+                    new Date(u.lastActive) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                ).length;
+                document.getElementById('totalEnrollments').textContent = enrollmentsSnapshot.size;
+                
+                // Populate users table
+                const tableBody = document.getElementById('usersTableBody');
+                tableBody.innerHTML = '';
+                
+                users.forEach(user => {
+                    const courseCount = user.enrolledCourses ? user.enrolledCourses.length : 0;
+                    const row = `
+                        <div class="table-row">
+                            <div>${user.name}</div>
+                            <div>${user.email}</div>
+                            <div>${courseCount} دورة</div>
+                            <div>
+                                <button class="manage-btn" onclick="manageUser('${user.id}')">
+                                    إدارة
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+                
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+            }
         }
 
+        window.manageUser = (userId) => {
+            // Simplified user management
+            const action = prompt('اختر الإجراء:\n1 - إضافة دورة\n2 - إزالة دورة\n3 - حظر المستخدم');
+            
+            if (action === '1') {
+                const courseId = prompt('أدخل رقم الدورة (1-4):');
+                addCourseToUser(userId, parseInt(courseId));
+            } else if (action === '2') {
+                const courseId = prompt('أدخل رقم الدورة المراد إزالتها:');
+                removeCourseFromUser(userId, parseInt(courseId));
+            } else if (action === '3') {
+                alert('ميزة الحظر ستكون متاحة قريباً');
+            }
+        };
+
+        async function addCourseToUser(userId, courseId) {
+            try {
+                const userRef = doc(db, 'users', userId);
+                const userDoc = await getDoc(userRef);
+                const userData = userDoc.data();
+                
+                if (!userData.enrolledCourses.includes(courseId)) {
+                    const updatedCourses = [...userData.enrolledCourses, courseId];
+                    await updateDoc(userRef, { enrolledCourses: updatedCourses });
+                    
+                    // Create enrollment record
+                    await setDoc(doc(db, 'enrollments', `${userId}_${courseId}`), {
+                        userId: userId,
+                        courseId: courseId,
+                        enrolledAt: new Date().toISOString(),
+                        progress: 0,
+                        completed: false
+                    });
+                    
+                    alert('تم إضافة الدورة بنجاح!');
+                    loadAdminData();
+                } else {
+                    alert('المستخدم مشترك في هذه الدورة بالفعل');
+                }
+            } catch (error) {
+                console.error('Error adding course:', error);
+                alert('حدث خطأ أثناء إضافة الدورة');
+            }
+        }
+
+        async function removeCourseFromUser(userId, courseId) {
+            try {
+                const userRef = doc(db, 'users', userId);
+                const userDoc = await getDoc(userRef);
+                const userData = userDoc.data();
+                
+                const updatedCourses = userData.enrolledCourses.filter(id => id !== courseId);
+                await updateDoc(userRef, { enrolledCourses: updatedCourses });
+                
+                alert('تم إزالة الدورة بنجاح!');
+                loadAdminData();
+            } catch (error) {
+                console.error('Error removing course:', error);
+                alert('حدث خطأ أثناء إزالة الدورة');
+            }
+        }
+
+        // Utility functions
         function showAlert(container, message, type) {
             container.innerHTML = `<div class="alert ${type}">${message}</div>`;
             setTimeout(() => {
                 container.innerHTML = '';
             }, 6000);
+        }
+
+        function getFirebaseErrorMessage(error) {
+            const errorMessages = {
+                'auth/user-not-found': 'المستخدم غير موجود',
+                'auth/wrong-password': 'كلمة المرور غير صحيحة',
+                'auth/email-already-in-use': 'البريد الإلكتروني مستخدم بالفعل',
+                'auth/weak-password': 'كلمة المرور ضعيفة',
+                'auth/invalid-email': 'البريد الإلكتروني غير صحيح',
+                'auth/too-many-requests': 'تم تجاوز عدد المحاولات المسموح. حاول لاحقاً',
+                'auth/network-request-failed': 'خطأ في الاتصال بالإنترنت'
+            };
+            
+            return errorMessages[error.code] || 'حدث خطأ غير متوقع. حاول مرة أخرى';
         }
     </script>
 </body>
